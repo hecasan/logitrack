@@ -1,39 +1,70 @@
 package com.ags.logitrack.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
+import java.time.LocalDateTime;
 
 @Entity
+@Table(name = "entrega_simulada")
 public class EntregaSimulada {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @ManyToOne
+    @JoinColumn(name = "robo_id")
+    private RoboLogistico robo;
+
+    private String codigoPedido;
     private String origem;
     private String destino;
-    private String prioridade;
+    private LocalDateTime dataHoraInicio;
+    private LocalDateTime dataHoraFim;
     private String status;
-    private Long roboResponsavelId;
+    private Double distanciaPercorrida;
+    private String observacoes;
 
+    // Construtores
     public EntregaSimulada() {
     }
 
-    public EntregaSimulada(String origem, String destino, String prioridade, String status, Long roboResponsavelId) {
+    public EntregaSimulada(RoboLogistico robo, String codigoPedido, String origem, String destino,
+                           LocalDateTime dataHoraInicio, LocalDateTime dataHoraFim, String status,
+                           Double distanciaPercorrida, String observacoes) {
+        this.robo = robo;
+        this.codigoPedido = codigoPedido;
         this.origem = origem;
         this.destino = destino;
-        this.prioridade = prioridade;
+        this.dataHoraInicio = dataHoraInicio;
+        this.dataHoraFim = dataHoraFim;
         this.status = status;
-        this.roboResponsavelId = roboResponsavelId;
+        this.distanciaPercorrida = distanciaPercorrida;
+        this.observacoes = observacoes;
     }
 
+    // Getters e Setters
     public Long getId() {
         return id;
     }
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public RoboLogistico getRobo() {
+        return robo;
+    }
+
+    public void setRobo(RoboLogistico robo) {
+        this.robo = robo;
+    }
+
+    public String getCodigoPedido() {
+        return codigoPedido;
+    }
+
+    public void setCodigoPedido(String codigoPedido) {
+        this.codigoPedido = codigoPedido;
     }
 
     public String getOrigem() {
@@ -52,12 +83,20 @@ public class EntregaSimulada {
         this.destino = destino;
     }
 
-    public String getPrioridade() {
-        return prioridade;
+    public LocalDateTime getDataHoraInicio() {
+        return dataHoraInicio;
     }
 
-    public void setPrioridade(String prioridade) {
-        this.prioridade = prioridade;
+    public void setDataHoraInicio(LocalDateTime dataHoraInicio) {
+        this.dataHoraInicio = dataHoraInicio;
+    }
+
+    public LocalDateTime getDataHoraFim() {
+        return dataHoraFim;
+    }
+
+    public void setDataHoraFim(LocalDateTime dataHoraFim) {
+        this.dataHoraFim = dataHoraFim;
     }
 
     public String getStatus() {
@@ -68,11 +107,19 @@ public class EntregaSimulada {
         this.status = status;
     }
 
-    public Long getRoboResponsavelId() {
-        return roboResponsavelId;
+    public Double getDistanciaPercorrida() {
+        return distanciaPercorrida;
     }
 
-    public void setRoboResponsavelId(Long roboResponsavelId) {
-        this.roboResponsavelId = roboResponsavelId;
+    public void setDistanciaPercorrida(Double distanciaPercorrida) {
+        this.distanciaPercorrida = distanciaPercorrida;
+    }
+
+    public String getObservacoes() {
+        return observacoes;
+    }
+
+    public void setObservacoes(String observacoes) {
+        this.observacoes = observacoes;
     }
 }
