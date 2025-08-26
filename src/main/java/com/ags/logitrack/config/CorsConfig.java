@@ -14,11 +14,17 @@ public class CorsConfig {
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         CorsConfiguration config = new CorsConfiguration();
 
-        // Permite credenciais
-        config.setAllowCredentials(true);
+        // Para desenvolvimento, permite todas as origens
+        config.setAllowCredentials(false);
+        config.addAllowedOriginPattern("*");
 
-        // Permite todas as origens - você pode restringir para origens específicas se necessário
-        config.addAllowedOrigin("http://localhost:8081");
+        // Ou, para produção, use credenciais com origens específicas:
+        // config.setAllowCredentials(true);
+        // config.addAllowedOrigin("http://localhost:8081");
+        // config.addAllowedOrigin("http://localhost:8082");
+        // config.addAllowedOrigin("http://127.0.0.1:8082");
+        // config.addAllowedOrigin("http://localhost:19006");
+        // config.addAllowedOrigin("http://127.0.0.1:19006");
 
         // Permite todos os cabeçalhos
         config.addAllowedHeader("*");
