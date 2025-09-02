@@ -2,6 +2,7 @@ package com.ags.logitrack.controller;
 
 import com.ags.logitrack.dto.UsuarioRequestDTO;
 import com.ags.logitrack.dto.UsuarioResponseDTO;
+import com.ags.logitrack.dto.UsuarioUpdateRequestDTO;
 import com.ags.logitrack.service.UsuarioService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -9,6 +10,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.List;
 
@@ -73,8 +76,16 @@ public class UsuarioController {
    @PreAuthorize("hasRole('ADMIN')")
    public ResponseEntity<UsuarioResponseDTO> atualizarUsuario(
          @PathVariable Long id,
-         @Valid @RequestBody UsuarioRequestDTO usuarioRequest) {
+         @RequestBody UsuarioRequestDTO usuarioRequest) {
+      
+      System.out.println("🔄 Recebendo requisição de atualização:");
+      System.out.println("  ID: " + id);
+      System.out.println("  Dados: " + usuarioRequest);
+      
       UsuarioResponseDTO usuario = usuarioService.atualizarUsuario(id, usuarioRequest);
+      
+      System.out.println("✅ Usuário atualizado com sucesso: " + usuario);
+      
       return ResponseEntity.ok(usuario);
    }
 
@@ -126,7 +137,7 @@ public class UsuarioController {
     */
    @PutMapping("/perfil")
    public ResponseEntity<UsuarioResponseDTO> atualizarPerfil(
-         @Valid @RequestBody UsuarioRequestDTO usuarioRequest,
+         @RequestBody UsuarioRequestDTO usuarioRequest,
          Authentication authentication) {
 
       String username = authentication.getName();
